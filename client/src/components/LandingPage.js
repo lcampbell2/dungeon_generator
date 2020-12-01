@@ -58,21 +58,23 @@ export function LandingPage() {
           </Stack>
         </Stack>
       ) : (
-        <Stack mt="50">
+        <Stack mt="50" mb="10" mx="30">
           <Text fontSize="xl" fontWeight="bold">
             Room #{roomNumber}
           </Text>
           <Room roomType={roomType} />
           <Divider borderColor="gray.800" />
-          <Button
-            colorScheme="orange"
-            onClick={() => {
-              handleClick();
-            }}
-            maxW="50%"
-          >
-            Next Room
-          </Button>
+          <Stack align="center">
+            <Button
+              colorScheme="orange"
+              onClick={() => {
+                handleClick();
+              }}
+              w="300px"
+            >
+              Next Room
+            </Button>
+          </Stack>
         </Stack>
       )}
     </Box>

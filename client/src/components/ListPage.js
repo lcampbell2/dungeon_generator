@@ -11,7 +11,7 @@ export function ListPage() {
 
   return (
     <Box mb="50">
-      <Stack align="center">
+      <Stack align="center" mb="5">
         <Button
           colorScheme="orange"
           size="lg"

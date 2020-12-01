@@ -7,6 +7,7 @@ import {
   Input,
   Select,
   Button,
+  Textarea,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
@@ -68,7 +69,7 @@ export function BossForm() {
       </FormControl>
       <FormControl id="description" isRequired>
         <FormLabel>Description:</FormLabel>
-        <Input
+        <Textarea
           type="text"
           bgColor="gray.200"
           color="gray.800"

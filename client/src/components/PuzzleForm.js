@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Button,
+  Textarea,
 } from "@chakra-ui/react";
 
 export function PuzzleForm() {
@@ -55,7 +56,7 @@ export function PuzzleForm() {
       </FormControl>
       <FormControl id="description" isRequired>
         <FormLabel>Description:</FormLabel>
-        <Input
+        <Textarea
           type="text"
           bgColor="gray.200"
           color="gray.800"

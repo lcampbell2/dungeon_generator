@@ -1,5 +1,6 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, HStack, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { GiMonsterGrasp } from "@react-icons/all-files/gi/GiMonsterGrasp";
 
 export function MonsterRoom({ id }) {
   const [roomDetails, setRoomDetails] = useState([]);
@@ -19,20 +20,46 @@ export function MonsterRoom({ id }) {
   }, [id]);
 
   const { name, description, strength, weakness, loot } = roomDetails;
+  const amount = Math.floor(Math.random() * 15) + 4;
 
   return (
     <Box>
       <Stack isInline align="center" mb="10">
-        {/* monster icon */}
         <Text fontWeight="bold" fontSize="3xl">
           Monster Room
         </Text>
+        <GiMonsterGrasp color="red" size="2rem" />
       </Stack>
-      <Text>Name: {name}</Text>
-      <Text>Description: {description}</Text>
-      <Text>Strength: {strength}</Text>
-      <Text>Weakness: {weakness}</Text>
-      <Text>Loot: {loot}</Text>
+      <Stack>
+        <HStack>
+          <Text>Upon entering the room, you encounter</Text>
+          <Text color="yellow.400" fontWeight="bold">
+            {amount}
+          </Text>
+          <Text color="red.500" fontWeight="bold">
+            {name}s: {description}!
+          </Text>
+        </HStack>
+
+        <HStack>
+          <Text>They are armed with</Text>
+          <Text color="blue.400" fontWeight="bold">
+            {strength}
+          </Text>
+        </HStack>
+        <HStack>
+          <Text>Their hidden weakness is</Text>
+          <Text color="orange.400" fontWeight="bold">
+            {weakness}
+          </Text>
+        </HStack>
+        <HStack>
+          <Text>If they are defeated, they drop</Text>
+          <Text color="purple.300" fontWeight="bold">
+            {loot}
+          </Text>
+        </HStack>
+      </Stack>
     </Box>
   );
 }

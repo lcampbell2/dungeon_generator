@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Radio,
   HStack,
+  Textarea,
 } from "@chakra-ui/react";
 
 export function TreasureForm() {
@@ -31,7 +32,7 @@ export function TreasureForm() {
       </FormControl>
       <FormControl id="description" isRequired>
         <FormLabel>Description:</FormLabel>
-        <Input
+        <Textarea
           type="text"
           bgColor="gray.200"
           color="gray.800"

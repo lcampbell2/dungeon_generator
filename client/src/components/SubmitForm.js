@@ -22,7 +22,7 @@ export function SubmitForm({ category }) {
       default:
         return (
           <Text fontSize="xl" textAlign="center">
-            Make a selection to submit something new!
+            View a list to submit something new!
           </Text>
         );
     }
