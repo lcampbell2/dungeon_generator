@@ -10,10 +10,42 @@ import {
   Radio,
   HStack,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
 
 export function TreasureForm() {
+  const toast = useToast();
+  const postTreasure = async (body) => {
+    try {
+      const response = await fetch("http://localhost:4111/treasures", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      toast({
+        title: "Treasure Submitted!",
+        description:
+          "You have successfully submitted the treasure to the database",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Error",
+        description: error.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      console.error(error);
+    }
+  };
+
   return (
     <Box mx="10" w="50%">
       <Text fontSize="3xl" fontWeight="bold">
@@ -22,7 +54,7 @@ export function TreasureForm() {
       <Formik
         initialValues={{ name: "", description: "", value: 0, magic: "false" }}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+          postTreasure(values);
           actions.setSubmitting(false);
         }}
       >

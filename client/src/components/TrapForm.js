@@ -8,12 +8,13 @@ import {
   Select,
   Button,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
 
 export function TrapForm() {
   const [treaures, setTreasures] = useState([]);
-
+  const toast = useToast();
   const getTreasures = async () => {
     try {
       const response = await fetch(`http://localhost:4111/treasures`);
@@ -21,6 +22,35 @@ export function TrapForm() {
       setTreasures(jsonData);
     } catch (err) {
       console.error(err.message);
+    }
+  };
+
+  const postTrap = async (body) => {
+    try {
+      const response = await fetch("http://localhost:4111/traps", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      toast({
+        title: "Trap Submitted!",
+        description: "You have successfully submitted the trap to the database",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Error",
+        description: error.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      console.error(error);
     }
   };
 
@@ -35,7 +65,7 @@ export function TrapForm() {
       <Formik
         initialValues={{ name: "", description: "", treasure: 1 }}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+          postTrap(values);
           actions.setSubmitting(false);
         }}
       >

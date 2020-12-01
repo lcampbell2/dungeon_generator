@@ -289,7 +289,7 @@ app.post("/traps", async (req, res) => {
   try {
     const { name, description, treasure } = req.body;
     const newTrap = await pool.query(
-      "INSERT INTO traps (name, description, treasure) \
+      "INSERT INTO traps (name, description, treasure_id) \
       VALUES($1, $2, $3) RETURNING *",
       [name, description, treasure]
     );

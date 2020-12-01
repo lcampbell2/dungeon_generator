@@ -7,6 +7,7 @@ import {
   Select,
   Button,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export function BossForm() {
   const [treaures, setTreasures] = useState([]);
   const [stats, setStats] = useState([]);
   const [monsters, setMonsters] = useState([]);
+  const toast = useToast();
 
   const getTreasures = async () => {
     try {
@@ -46,6 +48,35 @@ export function BossForm() {
     }
   };
 
+  const postBoss = async (body) => {
+    try {
+      const response = await fetch("http://localhost:4111/bosses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      toast({
+        title: "Boss Submitted!",
+        description: "You have successfully submitted the boss to the database",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Error",
+        description: error.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getTreasures();
     getStats();
@@ -66,7 +97,7 @@ export function BossForm() {
           treasure: 1,
         }}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+          postBoss(values);
           actions.setSubmitting(false);
         }}
       >

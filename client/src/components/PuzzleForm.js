@@ -8,12 +8,14 @@ import {
   Select,
   Button,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
 
 export function PuzzleForm() {
   const [treaures, setTreasures] = useState([]);
   const [traps, setTraps] = useState([]);
+  const toast = useToast();
 
   const getTreasures = async () => {
     try {
@@ -35,6 +37,36 @@ export function PuzzleForm() {
     }
   };
 
+  const postPuzzle = async (body) => {
+    try {
+      const response = await fetch("http://localhost:4111/puzzles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      toast({
+        title: "Puzzle Submitted!",
+        description:
+          "You have successfully submitted the puzzle to the database",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Error",
+        description: error.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getTreasures();
     getTraps();
@@ -53,7 +85,7 @@ export function PuzzleForm() {
           punishment: 1,
         }}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+          postPuzzle(values);
           actions.setSubmitting(false);
         }}
       >

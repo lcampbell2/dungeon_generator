@@ -7,6 +7,7 @@ import {
   Select,
   Button,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
@@ -14,6 +15,7 @@ import { Formik } from "formik";
 export function MonsterForm() {
   const [treaures, setTreasures] = useState([]);
   const [stats, setStats] = useState([]);
+  const toast = useToast();
 
   const getTreasures = async () => {
     try {
@@ -35,6 +37,35 @@ export function MonsterForm() {
     }
   };
 
+  const postMonster = async (body) => {
+    try {
+      const response = await fetch("http://localhost:4111/monsters", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      toast({
+        title: "Monster Submitted!",
+        description:
+          "You have successfully submitted the monster to the database",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Submission Error",
+        description: error.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
+  };
+
   useEffect(() => {
     getTreasures();
     getStats();
@@ -48,7 +79,7 @@ export function MonsterForm() {
       <Formik
         initialValues={{ name: "", description: "", strength: 1, treasure: 1 }}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
+          postMonster(values);
           actions.setSubmitting(false);
         }}
       >
