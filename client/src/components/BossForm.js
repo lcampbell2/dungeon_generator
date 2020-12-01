@@ -9,6 +9,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
+import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
 
 export function BossForm() {
@@ -57,66 +58,109 @@ export function BossForm() {
       <Text fontSize="3xl" fontWeight="bold">
         Submit a New Boss:
       </Text>
-      <FormControl id="name" isRequired>
-        <FormLabel>Name:</FormLabel>
-        <Input
-          type="text"
-          bgColor="gray.200"
-          color="gray.800"
-          mb="4"
-          placeholder="Insert wicked name here"
-        />
-      </FormControl>
-      <FormControl id="description" isRequired>
-        <FormLabel>Description:</FormLabel>
-        <Textarea
-          type="text"
-          bgColor="gray.200"
-          color="gray.800"
-          mb="4"
-          placeholder="Insert epic description here"
-        />
-      </FormControl>
-      <FormControl id="stats" isRequired>
-        <FormLabel>Stats:</FormLabel>
-        <Select bgColor="gray.200" color="gray.800" mb="4">
-          <option hidden>--Select a strength/weakness</option>
-          {stats.map((stat) => {
-            return (
-              <option value={stat.id}>
-                Strength: {stat.strength} | Weakness: {stat.weakness}
-              </option>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <FormControl id="minion" isRequired>
-        <FormLabel>Minion:</FormLabel>
-        <Select bgColor="gray.200" color="gray.800" mb="4">
-          <option hidden>--Select a monster--</option>
-          {monsters.map((monster) => {
-            return <option value={monster.id}>{monster.name}</option>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl id="loot" isRequired>
-        <FormLabel>Loot:</FormLabel>
-        <Select bgColor="gray.200" color="gray.800" mb="4">
-          <option hidden>--Select a treasure--</option>
-          {treaures.map((treasure) => {
-            return <option value={treasure.id}>{treasure.name}</option>;
-          })}
-        </Select>
-      </FormControl>
-      <Button
-        colorScheme="purple"
-        size="lg"
-        onClick={() => {
-          window.alert("new boss");
+      <Formik
+        initialValues={{
+          name: "",
+          description: "",
+          minion: 1,
+          strength: 1,
+          treasure: 1,
+        }}
+        onSubmit={(values, actions) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+          }, 1000);
         }}
       >
-        Submit
-      </Button>
+        {({ values, handleSubmit, handleChange, isSubmitting }) => (
+          <form onSubmit={handleSubmit}>
+            <FormControl id="name" isRequired>
+              <FormLabel>Name:</FormLabel>
+              <Input
+                type="text"
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                placeholder="Insert wicked name here"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="description" isRequired>
+              <FormLabel>Description:</FormLabel>
+              <Textarea
+                type="text"
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                placeholder="Insert epic description here"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="stats" isRequired>
+              <FormLabel>Stats:</FormLabel>
+              <Select
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                name="strength"
+                value={values.strength}
+                onChange={handleChange}
+              >
+                {stats.map((stat) => {
+                  return (
+                    <option value={stat.id}>
+                      Strength: {stat.strength} | Weakness: {stat.weakness}
+                    </option>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            <FormControl id="minion" isRequired>
+              <FormLabel>Minion:</FormLabel>
+              <Select
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                name="minion"
+                value={values.minion}
+                onChange={handleChange}
+              >
+                {monsters.map((monster) => {
+                  return <option value={monster.id}>{monster.name}</option>;
+                })}
+              </Select>
+            </FormControl>
+            <FormControl id="loot" isRequired>
+              <FormLabel>Loot:</FormLabel>
+              <Select
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                name="treasure"
+                value={values.treasure}
+                onChange={handleChange}
+              >
+                {treaures.map((treasure) => {
+                  return <option value={treasure.id}>{treasure.name}</option>;
+                })}
+              </Select>
+            </FormControl>
+            <Button
+              colorScheme="purple"
+              size="lg"
+              type="submit"
+              isLoading={isSubmitting}
+            >
+              Submit
+            </Button>
+          </form>
+        )}
+      </Formik>
     </Box>
   );
 }

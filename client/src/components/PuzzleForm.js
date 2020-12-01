@@ -10,6 +10,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
+import { Formik } from "formik";
 
 export function PuzzleForm() {
   const [treaures, setTreasures] = useState([]);
@@ -42,65 +43,105 @@ export function PuzzleForm() {
   return (
     <Box mx="10" w="50%">
       <Text fontSize="3xl" fontWeight="bold">
-        Submit a New Boss:
+        Submit a New Puzzle:
       </Text>
-      <FormControl id="name" isRequired>
-        <FormLabel>Name:</FormLabel>
-        <Input
-          type="text"
-          bgColor="gray.200"
-          color="gray.800"
-          mb="4"
-          placeholder="Insert wicked name here"
-        />
-      </FormControl>
-      <FormControl id="description" isRequired>
-        <FormLabel>Description:</FormLabel>
-        <Textarea
-          type="text"
-          bgColor="gray.200"
-          color="gray.800"
-          mb="4"
-          placeholder="Insert epic description here"
-        />
-      </FormControl>
-      <FormControl id="solution" isRequired>
-        <FormLabel>Solution:</FormLabel>
-        <Input
-          type="text"
-          bgColor="gray.200"
-          color="gray.800"
-          mb="4"
-          placeholder="Insert clever solution here"
-        />
-      </FormControl>
-      <FormControl id="reward" isRequired>
-        <FormLabel>Reward:</FormLabel>
-        <Select bgColor="gray.200" color="gray.800" mb="4">
-          <option hidden>--Select a treasure--</option>
-          {treaures.map((treasure) => {
-            return <option value={treasure.id}>{treasure.name}</option>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl id="punishment" isRequired>
-        <FormLabel>Punishment:</FormLabel>
-        <Select bgColor="gray.200" color="gray.800" mb="4">
-          <option hidden>--Select a trap--</option>
-          {traps.map((trap) => {
-            return <option value={trap.id}>{trap.name}</option>;
-          })}
-        </Select>
-      </FormControl>
-      <Button
-        colorScheme="purple"
-        size="lg"
-        onClick={() => {
-          window.alert("new puzzle");
+      <Formik
+        initialValues={{
+          name: "",
+          description: "",
+          solution: "",
+          treasure: 1,
+          punishment: 1,
+        }}
+        onSubmit={(values, actions) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+          }, 1000);
         }}
       >
-        Submit
-      </Button>
+        {({ values, handleSubmit, handleChange, isSubmitting }) => (
+          <form onSubmit={handleSubmit}>
+            <FormControl id="name" isRequired>
+              <FormLabel>Name:</FormLabel>
+              <Input
+                type="text"
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                placeholder="Insert wicked name here"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="description" isRequired>
+              <FormLabel>Description:</FormLabel>
+              <Textarea
+                type="text"
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                placeholder="Insert epic description here"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="solution" isRequired>
+              <FormLabel>Solution:</FormLabel>
+              <Textarea
+                type="text"
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                placeholder="Insert clever solution here"
+                name="solution"
+                value={values.solution}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl id="reward" isRequired>
+              <FormLabel>Reward:</FormLabel>
+              <Select
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                name="treasure"
+                value={values.treasure}
+                onChange={handleChange}
+              >
+                {treaures.map((treasure) => {
+                  return <option value={treasure.id}>{treasure.name}</option>;
+                })}
+              </Select>
+            </FormControl>
+            <FormControl id="punishment" isRequired>
+              <FormLabel>Punishment:</FormLabel>
+              <Select
+                bgColor="gray.200"
+                color="gray.800"
+                mb="4"
+                name="punishment"
+                value={values.punishment}
+                onChange={handleChange}
+              >
+                {traps.map((trap) => {
+                  return <option value={trap.id}>{trap.name}</option>;
+                })}
+              </Select>
+            </FormControl>
+            <Button
+              colorScheme="purple"
+              size="lg"
+              type="submit"
+              isLoading={isSubmitting}
+            >
+              Submit
+            </Button>
+          </form>
+        )}
+      </Formik>
     </Box>
   );
 }
