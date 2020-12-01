@@ -4,9 +4,7 @@ import {
   Text,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
-  Select,
   Button,
   RadioGroup,
   Radio,
@@ -24,10 +22,8 @@ export function TreasureForm() {
       <Formik
         initialValues={{ name: "", description: "", value: 0, magic: "false" }}
         onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

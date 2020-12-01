@@ -3,7 +3,6 @@ import {
   Text,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
   Select,
   Button,
@@ -62,15 +61,13 @@ export function BossForm() {
         initialValues={{
           name: "",
           description: "",
-          minion: 1,
           strength: 1,
+          minion: 1,
           treasure: 1,
         }}
         onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

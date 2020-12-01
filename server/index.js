@@ -187,9 +187,6 @@ app.get("/monsters/:id", async (req, res) => {
       ",
       [id]
     );
-    const tableSize = await pool.query(
-      "SELECT MAX(monster_id) AS size FROM monsters"
-    );
     res.json(monster.rows[0]);
   } catch (error) {
     console.error(error);
@@ -275,10 +272,11 @@ app.get("/treasures/:id", async (req, res) => {
 // submit monster
 app.post("/monsters", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, description, strength, treasure } = req.body;
     const newMonster = await pool.query(
-      "INSERT INTO monsters (name) VALUES($1) RETURNING *",
-      [name]
+      "INSERT INTO monsters (name, description, strength_id, treasure_id) \
+      VALUES($1, $2, $3, $4) RETURNING *",
+      [name, description, strength, treasure]
     );
     res.json(newMonster.rows[0]);
   } catch (err) {
@@ -289,10 +287,11 @@ app.post("/monsters", async (req, res) => {
 // submit trap
 app.post("/traps", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, description, treasure } = req.body;
     const newTrap = await pool.query(
-      "INSERT INTO traps (name) VALUES($1) RETURNING *",
-      [name]
+      "INSERT INTO traps (name, description, treasure) \
+      VALUES($1, $2, $3) RETURNING *",
+      [name, description, treasure]
     );
     res.json(newTrap.rows[0]);
   } catch (err) {
@@ -303,10 +302,11 @@ app.post("/traps", async (req, res) => {
 // submit puzzle
 app.post("/puzzles", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, description, solution, treasure, punishment } = req.body;
     const newPuzzle = await pool.query(
-      "INSERT INTO puzzles (name) VALUES($1) RETURNING *",
-      [name]
+      "INSERT INTO puzzles (name, description, solution, treasure_id, trap_id)\
+      VALUES($1, $2, $3, $4, $5) RETURNING *",
+      [name, description, solution, treasure, punishment]
     );
     res.json(newPuzzle.rows[0]);
   } catch (err) {
@@ -317,10 +317,11 @@ app.post("/puzzles", async (req, res) => {
 // submit boss
 app.post("/bosses", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, description, strength, minion, treasure } = req.body;
     const newBoss = await pool.query(
-      "INSERT INTO bosses (name) VALUES($1) RETURNING *",
-      [name]
+      "INSERT INTO bosses (name, description, strength_id, monster_id, treasure_id)\
+      VALUES($1, $2, $3, $4, $5) RETURNING *",
+      [name, description, strength, minion, treasure]
     );
     res.json(newBoss.rows[0]);
   } catch (err) {
@@ -331,10 +332,11 @@ app.post("/bosses", async (req, res) => {
 // submit treasure
 app.post("/treasures", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, description, value, magic } = req.body;
     const newTreasure = await pool.query(
-      "INSERT INTO treasures (name) VALUES($1) RETURNING *",
-      [name]
+      "INSERT INTO treasures (name, description, value, is_magic) \
+      VALUES($1, $2, $3, $4) RETURNING *",
+      [name, description, value, magic]
     );
     res.json(newTreasure.rows[0]);
   } catch (err) {

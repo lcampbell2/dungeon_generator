@@ -4,7 +4,6 @@ import {
   Text,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
   Select,
   Button,
@@ -36,10 +35,8 @@ export function TrapForm() {
       <Formik
         initialValues={{ name: "", description: "", treasure: 1 }}
         onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

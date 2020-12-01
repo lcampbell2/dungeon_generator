@@ -48,10 +48,8 @@ export function MonsterForm() {
       <Formik
         initialValues={{ name: "", description: "", strength: 1, treasure: 1 }}
         onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (
