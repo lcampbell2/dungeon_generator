@@ -87,6 +87,7 @@ export function PuzzleForm() {
         onSubmit={(values, actions) => {
           postPuzzle(values);
           actions.setSubmitting(false);
+          window.location = "/list";
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

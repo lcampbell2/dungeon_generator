@@ -67,6 +67,7 @@ export function TrapForm() {
         onSubmit={(values, actions) => {
           postTrap(values);
           actions.setSubmitting(false);
+          window.location = "/list";
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

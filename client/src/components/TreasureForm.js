@@ -56,6 +56,7 @@ export function TreasureForm() {
         onSubmit={(values, actions) => {
           postTreasure(values);
           actions.setSubmitting(false);
+          window.location = "/list";
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

@@ -99,6 +99,7 @@ export function BossForm() {
         onSubmit={(values, actions) => {
           postBoss(values);
           actions.setSubmitting(false);
+          window.location = "/list";
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (

@@ -81,6 +81,7 @@ export function MonsterForm() {
         onSubmit={(values, actions) => {
           postMonster(values);
           actions.setSubmitting(false);
+          window.location = "/list";
         }}
       >
         {({ values, handleSubmit, handleChange, isSubmitting }) => (
