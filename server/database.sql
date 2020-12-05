@@ -51,3 +51,11 @@ CREATE TABLE weaknesses (
   weakness_id SERIAL PRIMARY KEY,
   name VARCHAR(128)
 );
+
+\copy bosses(name, description, strength_id, monster_id, treasure_id) from 'bosses.csv' DELIMITER ',' CSV HEADER
+\copy monsters(name, description, strength_id, treasure_id) from 'monsters.csv' DELIMITER ',' CSV HEADER
+\copy puzzles(name, description, solution, treasure_id, trap_id) from 'puzzles.csv' DELIMITER ',' CSV HEADER
+\copy strengths(name, weakness_id) from 'strengths.csv' DELIMITER ',' CSV HEADER
+\copy traps(name, description, treasure_id) from 'traps.csv' DELIMITER ',' CSV HEADER
+\copy treasures(name, description, value, is_magic) from 'treasures.csv' DELIMITER ',' CSV HEADER
+\copy weaknesses(name) from 'weaknesses.csv' DELIMITER ',' CSV HEADER
