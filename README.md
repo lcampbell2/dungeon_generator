@@ -1,6 +1,6 @@
 # dungeon_generator
 
-on an new Ubuntu 20.04 system
+on a new Ubuntu 20.04 system
 
 `sudo apt-get update`
 
